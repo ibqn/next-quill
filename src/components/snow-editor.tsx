@@ -13,7 +13,12 @@ export const SnowEditor = ({ value, onChange }: SnowEditorProps) => {
   const { editorRef } = useQuillEditor()
 
   const delta = useMemo(() => {
-    return JSON.parse(value ?? "{}") as Delta
+    try {
+      return JSON.parse(value ?? "{}") as Delta
+    } catch {
+      // console.error("Error parsing JSON:", error)
+      return {} as Delta
+    }
   }, [value])
 
   const onTextChange = () => {
